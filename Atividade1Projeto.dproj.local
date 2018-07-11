@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2018/07/04 08:18:48.000.044,=C:\Users\rborges\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2018/07/04 09:16:47.000.179,=C:\Users\rborges\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/07/04 10:12:14.000.384,C:\Users\rborges\Documents\Embarcadero\Studio\Projects\Atividade1.dfm=C:\Users\rborges\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2018/07/04 10:12:14.000.384,C:\Users\rborges\Documents\Embarcadero\Studio\Projects\Atividade1.pas=C:\Users\rborges\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2018/07/04 10:12:23.000.305,C:\Users\rborges\Documents\Embarcadero\Studio\Projects\Atividade1Janela2.pas=C:\Users\rborges\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/07/04 10:12:23.000.305,C:\Users\rborges\Documents\Embarcadero\Studio\Projects\Atividade1Janela2.dfm=C:\Users\rborges\Documents\Embarcadero\Studio\Projects\Unit2.dfm</Transaction>
+    <Transaction>2018/07/04 10:12:32.000.794,C:\Users\rborges\Documents\Embarcadero\Studio\Projects\Atividade1Projeto.dproj=C:\Users\rborges\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2018/07/04 11:09:15.000.066,=C:\Users\rborges\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2018/07/04 11:16:35.000.838,C:\Users\rborges\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\rborges\Documents\Embarcadero\Studio\Projects\database.dfm</Transaction>
+    <Transaction>2018/07/04 11:16:35.000.838,C:\Users\rborges\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\rborges\Documents\Embarcadero\Studio\Projects\database.pas</Transaction>
+  </Transactions>  <ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="Atividade1.pas"/>
+    <File Path="Atividade1.dfm"/>
+    <File Path="Atividade1Janela2.pas"/>
+    <File Path="Atividade1Janela2.dfm"/>
+    <File Path="database.pas"/>
+    <File Path="database.dfm"/>
+  </ProjectSortOrder>
+</BorlandProject>
