@@ -121,26 +121,6 @@
       end;
     end;
 
-    function ListaSpecialityF : TObjectlist<TSpeciality>;
-    begin
-      TDatamodule1.getinstance.SQLQuery1.SQL.Clear;
-      TDatamodule1.getinstance.SQLQuery1.SQL.Add('SELECT * FROM speciality;');
-      TDatamodule1.getinstance.SQLQuery1.Open;
-      TDatamodule1.getinstance.SQLQuery1.First;
-      while not (TDatamodule1.getinstance.SQLQuery1.Eof) do
-    begin
-    //TODO TROCAR CLIENT DATA SET POR LISTA
-      ClientDataSet.Append;
-      ClientDataSet.FieldByName('specialityid').AsString := TDatamodule1.getinstance.SQLQuery1.FieldByName('specialityid').AsString;
-      ClientDataSet.FieldByName('description').AsString := TDatamodule1.getinstance.SQLQuery1.FieldByName('description').AsString;
-      ClientDataSet.FieldByName('flag_funcao_oper').AsString := TDatamodule1.getinstance.SQLQuery1.FieldByName('flag_funcao_oper').AsString;
-      ClientDataSet.FieldByName('codg_admingroup_fk').AsString := TDatamodule1.getinstance.SQLQuery1.FieldByName('codg_admingroup_fk').AsString;
-      ClientDataSet.Next;
-      TDatamodule1.getinstance.SQLQuery1.Next;
-    end;
-    end;
-
-
     initialization
     finalization
     TDataModule1.ReleaseInstance();
