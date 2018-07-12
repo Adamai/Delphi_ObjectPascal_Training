@@ -49,7 +49,7 @@
     implementation
 
     {$R *.dfm}
-
+     //TODO INSERIR ADMINGROUP
     procedure TForm1.AlterarClick(Sender: TObject);
     var
       Form2 : TForm2;
@@ -107,11 +107,15 @@
     CSpeciality : TSpeciality;
     begin
     CSpeciality := TSpeciality.Create;
-    CSpeciality.specialityid := DBGrid1.Fields[0].AsString;
-    CSpeciality.comando := CMDDetalhes;
-    CSpeciality := TController.GetInstance.CtrlSpeciality(CSpeciality, ClientDataSet1);   //l
-    CSpeciality.comando := CMDExcluir;
-    TController.GetInstance.CtrlSpeciality(CSpeciality, ClientDataSet1);
+    try
+      CSpeciality.specialityid := DBGrid1.Fields[0].AsString;
+      CSpeciality.comando := CMDDetalhes;
+      CSpeciality := TController.GetInstance.CtrlSpeciality(CSpeciality, ClientDataSet1);   //l
+      CSpeciality.comando := CMDExcluir;
+      TController.GetInstance.CtrlSpeciality(CSpeciality, ClientDataSet1);
+    finally
+      CSpeciality.Free;
+    end;
     end;
 
     procedure TForm1.FormCreate(Sender: TObject);
