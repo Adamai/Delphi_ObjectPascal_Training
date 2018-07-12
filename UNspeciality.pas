@@ -19,10 +19,10 @@ TSpeciality = class(TObject)
   property comando : TComandos read FComando write FComando;
 end;
 
-var
-
-
 implementation
+
+
+
 
 
 end.

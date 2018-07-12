@@ -55,24 +55,23 @@ begin
 end;
 
 procedure TController.ClientRefresh(ClientDataSet : TClientDataSet);
+  var
+  i : integer;
   begin
-    TDatamodule1.getinstance.SQLQuery1.SQL.Clear;
-    TDatamodule1.getinstance.SQLQuery1.SQL.Add('SELECT * FROM speciality;');
-    TDatamodule1.getinstance.SQLQuery1.Open;
-    TDatamodule1.getinstance.SQLQuery1.First;
     ClientDataSet.DisableControls;
+    i:=0;
     try
       ClientDataSet.EmptyDataSet;
       ClientDataSet.First;
-    while not (TDatamodule1.getinstance.SQLQuery1.Eof) do
+    while (i < Tdatamodule1.getinstance.ListaSpecialityF.count) do
     begin
       ClientDataSet.Append;
-      ClientDataSet.FieldByName('specialityid').AsString := TDatamodule1.getinstance.SQLQuery1.FieldByName('specialityid').AsString;
-      ClientDataSet.FieldByName('description').AsString := TDatamodule1.getinstance.SQLQuery1.FieldByName('description').AsString;
-      ClientDataSet.FieldByName('flag_funcao_oper').AsString := TDatamodule1.getinstance.SQLQuery1.FieldByName('flag_funcao_oper').AsString;
-      ClientDataSet.FieldByName('codg_admingroup_fk').AsString := TDatamodule1.getinstance.SQLQuery1.FieldByName('codg_admingroup_fk').AsString;
+      ClientDataSet.FieldByName('specialityid').AsString := Tdatamodule1.getinstance.ListaSpecialityF[i].specialityid;
+      ClientDataSet.FieldByName('description').AsString := TDatamodule1.getinstance.ListaSpecialityF[i].description;
+      ClientDataSet.FieldByName('flag_funcao_oper').AsString := TDatamodule1.getinstance.ListaSpecialityF[i].flag_funcao_oper;
+      ClientDataSet.FieldByName('codg_admingroup_fk').AsString := TDatamodule1.getinstance.ListaSpecialityF[i].codg_admin_group;
       ClientDataSet.Next;
-      TDatamodule1.getinstance.SQLQuery1.Next;
+      i:=i+1;
     end;
     ClientDataSet.First;
     finally
@@ -81,32 +80,22 @@ procedure TController.ClientRefresh(ClientDataSet : TClientDataSet);
   end;
 
   procedure TController.pesquisar(especialidade, OS : String; ClientDataSet : TClientDataSet);
+  var i : integer;
   begin
-    TDatamodule1.getinstance.SQLQuery1.SQL.Clear;
-    if (Length(OS)=0) then
-    begin
-      TDatamodule1.getinstance.SQLQuery1.SQL.Add('SELECT * FROM speciality WHERE description LIKE "%'+ especialidade + '%";');
-      end
-      else
-    begin
-      TDatamodule1.getinstance.SQLQuery1.SQL.Add('SELECT * FROM speciality WHERE description LIKE "%'+ especialidade + '%" AND codg_admingroup_fk LIKE "%' + OS + '%";');
-    end;
-    TDatamodule1.getinstance.SQLQuery1.Open;
-    TDatamodule1.getinstance.SQLQuery1.First;
     ClientDataSet.DisableControls;
+    i := 0;
     try
       ClientDataSet.EmptyDataSet;
       ClientDataSet.First;
-    while not (TDatamodule1.getinstance.SQLQuery1.Eof) do
+    while (i < Tdatamodule1.getinstance.pesquisar(especialidade, OS).count) do
     begin
-
       ClientDataSet.Append;
-      ClientDataSet.FieldByName('specialityid').AsString := TDatamodule1.getinstance.SQLQuery1.FieldByName('specialityid').AsString;
-      ClientDataSet.FieldByName('description').AsString := TDatamodule1.getinstance.SQLQuery1.FieldByName('description').AsString;
-      ClientDataSet.FieldByName('flag_funcao_oper').AsString := TDatamodule1.getinstance.SQLQuery1.FieldByName('flag_funcao_oper').AsString;
-      ClientDataSet.FieldByName('codg_admingroup_fk').AsString := TDatamodule1.getinstance.SQLQuery1.FieldByName('codg_admingroup_fk').AsString;
+      ClientDataSet.FieldByName('specialityid').AsString := Tdatamodule1.getinstance.pesquisar(especialidade, OS)[i].specialityid;
+      ClientDataSet.FieldByName('description').AsString := TDatamodule1.getinstance.pesquisar(especialidade, OS)[i].description;
+      ClientDataSet.FieldByName('flag_funcao_oper').AsString := TDatamodule1.getinstance.pesquisar(especialidade, OS)[i].flag_funcao_oper;
+      ClientDataSet.FieldByName('codg_admingroup_fk').AsString := TDatamodule1.getinstance.pesquisar(especialidade, OS)[i].codg_admin_group;
       ClientDataSet.Next;
-      TDatamodule1.getinstance.SQLQuery1.Next;
+      i := i + 1;
     end;
     ClientDataSet.First;
     finally
@@ -115,16 +104,15 @@ procedure TController.ClientRefresh(ClientDataSet : TClientDataSet);
   end;
 
   procedure TController.carregarCBAdmGroup(Cb : TCombobox);
+  var
+  i : integer;
   begin
+    i:=0;
     cb.Clear;
-    TDatamodule1.getinstance.SQLQuery1.SQL.Clear;
-    TDatamodule1.getinstance.SQLQuery1.SQL.Add('SELECT * FROM admingroup');
-    TDatamodule1.getinstance.SQLQuery1.Open;
-    TDatamodule1.getinstance.SQLQuery1.First;
-    while not (TDatamodule1.getinstance.SQLQuery1.Eof) do
+    while (i < TDatamodule1.getinstance.ListaAdminGroup.Count) do
     begin
-      Cb.Items.Add(TDatamodule1.getinstance.SQLQuery1.FieldByName('admingroupid').AsString);
-      TDatamodule1.getinstance.SQLQuery1.Next;
+      Cb.Items.Add(TDatamodule1.getinstance.ListaAdminGroup[i].admingroupid);
+      i := i + 1;
     end;
   end;
 
