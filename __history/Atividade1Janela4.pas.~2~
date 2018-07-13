@@ -1,0 +1,33 @@
+unit Atividade1Janela4;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,Data.DBXMySQL, Data.FMTBcd, Datasnap.DBClient, Datasnap.Provider, Data.DB, Data.SqlExpr;
+
+type
+  TForm4 = class(TForm)
+    Panel1: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Panel2: TPanel;
+    Confirmar: TButton;
+    Cancelar: TButton;
+  private
+    { Private declarations }
+  public
+    Alterar: Boolean;
+    ClientDataSet : TClientDataSet;
+  end;
+
+var
+  Form4: TForm4;
+
+implementation
+
+{$R *.dfm}
+
+end.

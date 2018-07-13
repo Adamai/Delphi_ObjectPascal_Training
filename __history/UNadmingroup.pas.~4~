@@ -1,0 +1,26 @@
+unit UNadmingroup;
+
+interface
+
+uses
+  system.Generics.collections;
+
+type
+TComandos = (CMDIncluir, CMDAlterar, CMDExcluir, CMDDetalhes);
+  TAdminGroup = class(TObject)
+    private
+    Fadmingroupid: string;
+    Fdescription: string;
+    Fcomando : Tcomandos;
+    public
+    property admingroupid : string read Fadmingroupid write Fadmingroupid;
+    property description : string read Fdescription write Fdescription;
+    property comando : string read Fcomando write Fcomando;
+    //function teste : TObjectlist<TAdminGroup>;
+  end;
+
+implementation
+
+
+
+end.

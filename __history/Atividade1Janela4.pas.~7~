@@ -1,0 +1,80 @@
+unit Atividade1Janela4;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,Data.DBXMySQL, Data.FMTBcd, Datasnap.DBClient, Datasnap.Provider, Data.DB, Data.SqlExpr,
+  UNadmingroup, UNcontroller;
+
+type
+  TForm4 = class(TForm)
+    Panel1: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Panel2: TPanel;
+    Confirmar: TButton;
+    Cancelar: TButton;
+    procedure ConfirmarClick(Sender: TObject);
+    procedure CancelarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    Alterar: Boolean;
+    ClientDataSet : TClientDataSet;
+  end;
+
+var
+  Form4: TForm4;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm4.CancelarClick(Sender: TObject);
+begin
+ close;
+end;
+
+procedure TForm4.ConfirmarClick(Sender: TObject);
+var
+    res : boolean;
+    Cadmingroup : TAdmingroup;
+    begin
+      Cadmingroup := TAdminGroup.Create;
+      res := false;
+      if ((Edit1.GetTextLen > 0) and (Edit2.GetTextLen > 0)) then
+        begin
+        if alterar = true then
+        begin
+          Cadmingroup.admingroupid := Edit1.Text;
+          Cadmingroup.comando := admCMDDetalhes;
+          Cadmingroup := Tcontroller.getinstance.ctrladm(Cadmingroup, ClientDataSet);
+          Cadmingroup.description := Edit2.Text;
+          Cadmingroup.comando := admCMDAlterar;
+          Tcontroller.getinstance.ctrladm(Cadmingroup, ClientDataSet);
+          //tdatamodule1.getinstance.alterarSpeciality(edit2.Text,flag,combobox1.Text,edit1.Text);
+          res := true;
+        end
+        else
+        begin
+          Cadmingroup.admingroupid := Edit1.Text;
+          Cadmingroup.description := Edit2.Text;
+          Cadmingroup.comando := admCMDIncluir;
+          Tcontroller.getinstance.ctrladm(Cadmingroup, ClientDataSet);
+          res := true;
+         end;
+         if res = true then
+         begin
+         close;
+         end;
+        end
+      else
+        begin
+         showmessage('Todos os campos devem ser preenchidos');
+        end;
+    end;
+
+end.

@@ -31,6 +31,11 @@
           function ListaSpecialityF : TObjectlist<TSpeciality>;
           function pesquisar(especialidade, OS : String) : TObjectlist<TSpeciality>;
           function ListaAdminGroup : TObjectList<TAdmingroup>;
+          function pesquisaradm(descricao, OS : String) : TObjectlist<TAdminGroup>;
+          function carregarAdmingroup(id : String) : TAdmingroup;
+          procedure excluiradmingroup(ClientDataSet : TClientDataSet);
+          procedure alteraradmingroup(description,id : String);
+          function inseriradmingroup(id,description: String) : boolean;
         end;
 
       var
@@ -160,7 +165,7 @@
         end
         else
       begin
-        SQLQuery1.SQL.Add('SELECT * FROM speciality WHERE description LIKE "%'+ especialidade + '%" AND codg_admingroup_fk LIKE "%' + OS + '%";');
+        SQLQuery1.SQL.Add('SELECT * FROM speciality WHERE description LIKE "%'+ especialidade + '%" AND codg_admingroup_fk = "' + OS + '";');
       end;
       SQLQuery1.Open;
       SQLQuery1.First;
@@ -198,6 +203,94 @@
         SQLQuery1.Next;
       end;
     end;
+
+
+    function TDatamodule1.pesquisaradm(descricao, OS : String) : TObjectlist<TAdminGroup>;
+    var
+    objadmgrp : TAdmingroup;
+    begin
+      SQLQuery1.SQL.Clear;
+      if (Length(OS)=0) then
+      begin
+        SQLQuery1.SQL.Add('SELECT * FROM admingroup WHERE description LIKE "%'+ descricao + '%";');
+        end
+        else
+      begin
+        SQLQuery1.SQL.Add('SELECT * FROM admingroup WHERE description LIKE "%'+ descricao + '%" AND admingroupid = "' + OS + '";');
+      end;
+      SQLQuery1.Open;
+      SQLQuery1.First;
+     result := TObjectlist<TAdminGroup>.create;
+        while not (TDatamodule1.getinstance.SQLQuery1.Eof) do
+      begin
+        ObjAdmGrp := Tadmingroup.Create;
+        objadmgrp.admingroupid := SQLQuery1.FieldByName('admingroupid').AsString;
+        objadmgrp.description := SQLQuery1.FieldByName('description').AsString;
+        result.Add(objadmgrp);
+        SQLQuery1.Next;
+      end;
+    end;
+
+    function Tdatamodule1.carregarAdmingroup(id : String) : TAdmingroup;
+      begin
+       SQLQuery1.SQL.Clear;
+       SQLQuery1.SQL.Add('SELECT * FROM admingroup WHERE admingroupid ="'+ id + '";');
+       SQLQuery1.Open;
+       SQLQuery1.First;
+       result := Tadmingroup.create;
+       result.admingroupid := SQLQuery1.FieldByName('admingroupid').AsString;
+       result.description := SQLQuery1.FieldByName('description').AsString;
+       result.comando := admCMDDetalhes;
+      end;
+
+      procedure TDataModule1.excluiradmingroup(ClientDataSet : TClientDataSet);
+      var
+      buttonSelected : Integer;
+      begin
+         buttonSelected := MessageDlg('Confirmação',mtCustom, [MbYes, MbNo], 0);
+        if buttonSelected = MrYes then
+        begin
+          SQLQuery1.SQL.Clear;
+          //Se der merda pode ser que seja aqui
+          SQLQuery1.SQL.Add('DELETE FROM equipmaintdb.admingroup WHERE admingroupid="'+ClientDataSet.Fields[0].AsString+'";');
+          SQLQuery1.ExecSQL;
+        end;
+      end;
+
+
+      procedure TDataModule1.alteraradmingroup(description,id : String);
+      begin
+       SQLQuery1.SQL.Clear;
+       SQLQuery1.SQL.Add('UPDATE equipmaintdb.admingroup SET description="'+description+'" WHERE admingroupid="'+id+'";');
+       try
+            SQLQuery1.ExecSQL;
+          except
+            showmessage('ERRO');
+          end;
+       end;
+
+       function TDataModule1.inseriradmingroup(id,description: String) : boolean;
+      begin
+          SQLQuery1.SQL.Clear;
+          SQLQuery1.SQL.Add('SELECT * FROM admingroup WHERE admingroupid ="'+ id + '";');
+          SQLQuery1.Open;
+          SQLQuery1.First;
+          if not (SQLQuery1.Eof) then
+            begin
+            showmessage('Código ja foi inserido');
+            Result := false;
+            exit;
+            end;
+           SQLQuery1.SQL.Clear;
+           SQLQuery1.SQL.Add('INSERT INTO admingroup (admingroupid, description) VALUES ("'+id+'", "'+description+'");');
+           try
+            SQLQuery1.ExecSQL;
+            Result := true;
+          except
+            showmessage('ERRO');
+          end;
+           end;
+
 
       initialization
       finalization
