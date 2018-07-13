@@ -135,7 +135,9 @@
         result := TObjectlist<TSpeciality>.create;
         while not (TDatamodule1.getinstance.SQLQuery1.Eof) do
       begin
+
         objSpeciality := TSpeciality.create;
+
         objSpeciality.specialityid := SQLQuery1.FieldByName('specialityid').AsString;
         objSpeciality.description := SQLQuery1.FieldByName('description').AsString;
         objSpeciality.flag_funcao_oper := SQLQuery1.FieldByName('flag_funcao_oper').AsString;
@@ -144,7 +146,6 @@
         result.add(objSpeciality);
         TDatamodule1.getinstance.SQLQuery1.Next;
       end;
-      objspeciality.Free;
       end;
 
 
@@ -177,7 +178,6 @@
         result.add(objSpeciality);
         TDatamodule1.getinstance.SQLQuery1.Next;
       end;
-      objspeciality.Free;
     end;
 
     function Tdatamodule1.ListaAdminGroup : TObjectList<TAdmingroup>;
@@ -197,7 +197,6 @@
         result.Add(objadmgrp);
         SQLQuery1.Next;
       end;
-      objadmgrp.Free;
     end;
 
       initialization

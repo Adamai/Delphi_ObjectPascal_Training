@@ -25,9 +25,7 @@ implementation
 class function TController.GetInstance: TController;
 begin
   if not Assigned(FInstance) then
-    begin
     FInstance := TController.Create;
-    end;
 Result := FInstance;
 end;
 
