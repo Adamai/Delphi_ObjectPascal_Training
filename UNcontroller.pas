@@ -3,15 +3,26 @@
 
   interface
 
-  uses UNspeciality, database, Data.DBXMySQL, Data.FMTBcd,
-      Datasnap.DBClient, Datasnap.Provider, Data.DB, Data.SqlExpr, Vcl.StdCtrls, Unadmingroup;
+  uses UNspeciality, database, Data.DBXMySQL, Data.FMTBcd, Vcl.Dialogs,Vcl.Forms,
+      Datasnap.DBClient, Datasnap.Provider, Data.DB, Data.SqlExpr, Vcl.StdCtrls, Unadmingroup,
+      system.SysUtils;
 
   type
+    IAtualizaTela = interface
+     ['{8FF85A15-68A4-4284-AF2E-CE7521D70C14}']
+     procedure AtualizaTela;
+     end;
     TController = class(TObject)
     strict private
       class var FInstance : TController;
     private
-      class procedure ReleaseInstance();
+      class
+    procedure ReleaseInstance();
+    private
+    FTelaPrincipal: TForm;
+    FTelaSecundaria: TForm;
+    procedure SetTelaPrincipal(const Value: TForm);
+    procedure SetTelaSecundaria(const Value: TForm);
     public
       class function GetInstance(): TController;
       function ctrlspeciality(CSpeciality:Tspeciality; ClientDataSet : TClientDataSet) : Tspeciality;
@@ -21,7 +32,11 @@
       procedure AdminRefresh(ClientDataSet : TClientDataSet);
       procedure pesquisaradm(descricao, OS : String; ClientDataSet : TClientDataSet);
       function ctrladm(Cadmingroup:TAdmingroup; ClientDataSet : TClientDataSet) : Tadmingroup;
+      procedure AtualizarTelas();
+      property TelaPrincipal : TForm read FTelaPrincipal write SetTelaPrincipal;
+      property TelaSecundaria : TForm read FTelaSecundaria write SetTelaSecundaria;
   end;
+
 
   implementation
 
@@ -38,7 +53,17 @@
       FInstance.Free;
   end;
 
-  function TController.ctrlspeciality(CSpeciality:Tspeciality; ClientDataSet : TClientDataSet) : Tspeciality;
+  procedure TController.SetTelaPrincipal(const Value: TForm);
+begin
+  FTelaPrincipal := Value;
+end;
+
+procedure TController.SetTelaSecundaria(const Value: TForm);
+begin
+  FTelaSecundaria := Value;
+end;
+
+function TController.ctrlspeciality(CSpeciality:Tspeciality; ClientDataSet : TClientDataSet) : Tspeciality;
   begin
     try
      case Cspeciality.comando of
@@ -123,6 +148,7 @@
     var
     i : integer;
     begin
+    ClientDataSet.First;
       ClientDataSet.DisableControls;
       i:=0;
       try
@@ -131,8 +157,8 @@
       while (i < Tdatamodule1.getinstance.ListaAdminGroup.count) do
       begin
         ClientDataSet.Append;
-        ClientDataSet.FieldByName('admingroupid').AsString := Tdatamodule1.getinstance.ListaAdminGroup[i].admingroupid;
-        ClientDataSet.FieldByName('description').AsString := TDatamodule1.getinstance.ListaAdminGroup[i].description;
+        ClientDataSet.Fields[0].AsString := Tdatamodule1.getinstance.ListaAdminGroup[i].admingroupid;
+        ClientDataSet.Fields[1].AsString := TDatamodule1.getinstance.ListaAdminGroup[i].description;
         ClientDataSet.Next;
         i:=i+1;
       end;
@@ -165,6 +191,23 @@
       end;
     end;
 
+    procedure TController.AtualizarTelas();
+    var
+      lAtualizaTela : IAtualizaTela;
+      lAtualizaTela2 : IAtualizaTela;
+    begin
+      //(FTelaPrincipal as IAtualizaTela).atualizaTela;
+      if supports(FTelaPrincipal, IAtualizaTela, lAtualizaTela) then
+      begin
+        lAtualizaTela.atualizaTela;
+      end;
+      if supports(FTelaSecundaria, IAtualizaTela, lAtualizaTela2) then
+      begin
+        lAtualizaTela2.atualizaTela;
+      end;
+    end;
+
+
     function TController.ctrladm(Cadmingroup:TAdmingroup; ClientDataSet : TClientDataSet) : Tadmingroup;
   begin
     try
@@ -178,7 +221,9 @@
     begin
       if Cadmingroup.comando <> admCMDDetalhes then
       begin
-        adminRefresh(ClientDataSet);
+        //adminRefresh(ClientDataSet);
+        AtualizarTelas;
+
       end;
     end;
     end;

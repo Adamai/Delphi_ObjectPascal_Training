@@ -110,23 +110,23 @@ object Form3: TForm3
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = []
   end
-  object ClientDataSet1: TClientDataSet
+  object ClientDataSetAdm: TClientDataSet
     Aggregates = <>
     Params = <>
-    Left = 272
-    Top = 192
-    object ClientDataSet1admingroupid: TStringField
+    Left = 224
+    Top = 136
+    object ClientDataSetAdmadmingroupid: TStringField
       FieldName = 'admingroupid'
       Size = 30
     end
-    object ClientDataSet1description: TStringField
+    object ClientDataSetAdmdescription: TStringField
       FieldName = 'description'
       Size = 200
     end
   end
   object DataSource1: TDataSource
-    DataSet = ClientDataSet1
-    Left = 352
-    Top = 192
+    DataSet = ClientDataSetAdm
+    Left = 320
+    Top = 136
   end
 end

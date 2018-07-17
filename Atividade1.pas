@@ -9,7 +9,7 @@
       Data.DBXMySQL, Data.FMTBcd, Datasnap.DBClient, Datasnap.Provider, Data.SqlExpr, Atividade1Janela3;
 
     type
-      TForm1 = class(TForm)
+      TForm1 = class(TForm, IAtualizaTela)
         Panel1: TPanel;
         Label1: TLabel;
         Edit1: TEdit;
@@ -18,7 +18,7 @@
         Incluir: TButton;
         Alterar: TButton;
         Excluir: TButton;
-    SO: TButton;
+        SO: TButton;
         Cancelar: TButton;
         DBGrid1: TDBGrid;
         Label2: TLabel;
@@ -42,6 +42,7 @@
         { Private declarations }
       public
         { Public declarations }
+        procedure AtualizaTela;
       end;
 
     var
@@ -74,7 +75,14 @@
       end;
     end;
 
-    procedure TForm1.Button1Click(Sender: TObject);
+    procedure TForm1.AtualizaTela;
+begin
+  ComboBox1.Clear;
+  TController.getinstance.ClientRefresh(ClientDataSet1);
+  TController.getinstance.carregarCBAdmGroup(combobox1);
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
     begin
       if checkbox1.Checked = true then
       begin
@@ -117,12 +125,12 @@
 
     procedure TForm1.FormCreate(Sender: TObject);
     begin
-      ComboBox1.Clear;
-      TController.getinstance.ClientRefresh(ClientDataSet1);
-      TController.getinstance.carregarCBAdmGroup(combobox1);
+      TController.GetInstance.TelaPrincipal := self;
+      AtualizaTela;
       ComboBox1.Enabled := false;
       ComboBox1.Style := csDropDownList;
     end;
+
 
     procedure TForm1.IncluirClick(Sender: TObject);
     var
@@ -144,6 +152,7 @@
       Form3 : TForm3;
     begin
       Form3 := TForm3.Create(Form3);
+      //Form3.ClientDataSet1 := clientdataset1;
       try
         Form3.ShowModal;
       finally

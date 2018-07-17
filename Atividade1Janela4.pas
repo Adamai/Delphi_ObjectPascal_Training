@@ -24,6 +24,7 @@ type
   public
     Alterar: Boolean;
     ClientDataSet : TClientDataSet;
+    Combo : TComboBox;
   end;
 
 var
