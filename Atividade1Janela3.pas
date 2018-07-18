@@ -106,11 +106,15 @@ var
     Cadmingroup : Tadmingroup;
     begin
     Cadmingroup := Tadmingroup.Create;
+    try
     Cadmingroup.admingroupid := DBGrid1.Fields[1].AsString;
     Cadmingroup.comando := admCMDDetalhes;
     Cadmingroup := TController.GetInstance.Ctrladm(Cadmingroup, ClientDataSetAdm);   //l
     Cadmingroup.comando := admCMDExcluir;
     TController.GetInstance.Ctrladm(Cadmingroup, ClientDataSetAdm);
+    finally
+      Cadmingroup.Free;
+    end;
     end;
 
 procedure TForm3.FormCreate(Sender: TObject);

@@ -44,8 +44,8 @@ var
     res : boolean;
     Cadmingroup : TAdmingroup;
     begin
-    //TODO REFRESH NO CLIENTDATASET DA PRIMEIRA JANELA
       Cadmingroup := TAdminGroup.Create;
+      try
       res := false;
       if ((Edit1.GetTextLen > 0) and (Edit2.GetTextLen > 0)) then
         begin
@@ -77,6 +77,9 @@ var
         begin
          showmessage('Todos os campos devem ser preenchidos');
         end;
+      finally
+        Cadmingroup.Free;
+      end;
     end;
 
 end.

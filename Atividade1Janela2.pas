@@ -55,6 +55,7 @@
     //CSpeciality : TSpeciality;
     begin
       CSpeciality := TSpeciality.Create;
+      try
       res := false;
       flag := 'E';
       if CheckBox1.State = cbChecked then
@@ -96,6 +97,9 @@
         begin
          showmessage('Todos os campos devem ser preenchidos');
         end;
+      finally
+       CSpeciality.Free;
+      end;
     end;
 
     procedure TForm2.FormCreate(Sender: TObject);
