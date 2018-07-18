@@ -20,7 +20,7 @@ type
     procedure ConfirmarClick(Sender: TObject);
     procedure CancelarClick(Sender: TObject);
   private
-    { Private declarations }
+      { Private declarations }
   public
     Alterar: Boolean;
     ClientDataSet : TClientDataSet;
@@ -36,50 +36,50 @@ implementation
 
 procedure TForm4.CancelarClick(Sender: TObject);
 begin
- close;
+  close;
 end;
 
 procedure TForm4.ConfirmarClick(Sender: TObject);
 var
-    res : boolean;
-    Cadmingroup : TAdmingroup;
+  res : boolean;
+  Cadmingroup : TAdmingroup;
+begin
+  Cadmingroup := TAdminGroup.Create;
+  try
+    res := false;
+    if ((Edit1.GetTextLen > 0) and (Edit2.GetTextLen > 0)) then
     begin
-      Cadmingroup := TAdminGroup.Create;
-      try
-      res := false;
-      if ((Edit1.GetTextLen > 0) and (Edit2.GetTextLen > 0)) then
-        begin
-        if alterar = true then
-        begin
-          Cadmingroup.admingroupid := Edit1.Text;
-          Cadmingroup.comando := admCMDDetalhes;
-          Cadmingroup := Tcontroller.getinstance.ctrladm(Cadmingroup, ClientDataSet);
-          Cadmingroup.description := Edit2.Text;
-          Cadmingroup.comando := admCMDAlterar;
-          Tcontroller.getinstance.ctrladm(Cadmingroup, ClientDataSet);
-          //tdatamodule1.getinstance.alterarSpeciality(edit2.Text,flag,combobox1.Text,edit1.Text);
-          res := true;
-        end
-        else
-        begin
-          Cadmingroup.admingroupid := Edit1.Text;
-          Cadmingroup.description := Edit2.Text;
-          Cadmingroup.comando := admCMDIncluir;
-          Tcontroller.getinstance.ctrladm(Cadmingroup, ClientDataSet);
-          res := true;
-         end;
-         if res = true then
-         begin
-         close;
-         end;
-        end
+      if alterar = true then
+      begin
+        Cadmingroup.admingroupid := Edit1.Text;
+        Cadmingroup.comando := admCMDDetalhes;
+        Cadmingroup := Tcontroller.getinstance.ctrladm(Cadmingroup, ClientDataSet);
+        Cadmingroup.description := Edit2.Text;
+        Cadmingroup.comando := admCMDAlterar;
+        Tcontroller.getinstance.ctrladm(Cadmingroup, ClientDataSet);
+        //tdatamodule1.getinstance.alterarSpeciality(edit2.Text,flag,combobox1.Text,edit1.Text);
+        res := true;
+      end
       else
-        begin
-         showmessage('Todos os campos devem ser preenchidos');
-        end;
-      finally
-        Cadmingroup.Free;
+      begin
+        Cadmingroup.admingroupid := Edit1.Text;
+        Cadmingroup.description := Edit2.Text;
+        Cadmingroup.comando := admCMDIncluir;
+        Tcontroller.getinstance.ctrladm(Cadmingroup, ClientDataSet);
+        res := true;
       end;
+      if res = true then
+      begin
+        close;
+      end;
+    end
+    else
+    begin
+      showmessage('Todos os campos devem ser preenchidos');
     end;
+  finally
+    Cadmingroup.Free;
+  end;
+end;
 
 end.

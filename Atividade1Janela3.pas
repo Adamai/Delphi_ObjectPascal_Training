@@ -20,7 +20,7 @@ type
     Excluir: TButton;
     Cancelar: TButton;
     DBGrid1: TDBGrid;
-  ClientDataSetAdm: TClientDataSet;
+    ClientDataSetAdm: TClientDataSet;
     DataSource1: TDataSource;
     ClientDataSetAdmadmingroupid: TStringField;
     ClientDataSetAdmdescription: TStringField;
@@ -31,11 +31,10 @@ type
     procedure IncluirClick(Sender: TObject);
     procedure AlterarClick(Sender: TObject);
     procedure ExcluirClick(Sender: TObject);
-  private
-    { Private declarations }
-  public
-    { Public declarations }
-    procedure AtualizaTela;
+    private
+      { Private declarations }
+    public
+      procedure AtualizaTela;
   end;
 
 var
@@ -49,21 +48,21 @@ implementation
 
 procedure TForm3.AlterarClick(Sender: TObject);
 var
-      Form4 : TForm4;
-    begin
-      Form4 := TForm4.Create(Form4);
-      try
-        Form4.Alterar := true;
-        Form4.ClientDataSet := ClientDataSetAdm;
-        //Cuidado aqui tambem pode dar merda
-        Form4.Edit1.Text := ClientDataSetAdm.Fields[0].AsString;
-        Form4.Edit1.ReadOnly := true;
-        Form4.Edit2.Text := ClientDataSetAdm.Fields[1].AsString;
-        Form4.ShowModal;
-      finally
-        Form4.Free;
-      end;
-    end;
+  Form4 : TForm4;
+begin
+  Form4 := TForm4.Create(Form4);
+  try
+    Form4.Alterar := true;
+    Form4.ClientDataSet := ClientDataSetAdm;
+    //Cuidado aqui tambem pode dar merda
+    Form4.Edit1.Text := ClientDataSetAdm.Fields[0].AsString;
+    Form4.Edit1.ReadOnly := true;
+    Form4.Edit2.Text := ClientDataSetAdm.Fields[1].AsString;
+    Form4.ShowModal;
+  finally
+    Form4.Free;
+  end;
+end;
 
 procedure TForm3.AtualizaTela;
 begin
@@ -74,48 +73,48 @@ end;
 
 procedure TForm3.Button1Click(Sender: TObject);
 begin
-if checkbox1.Checked = true then
-      begin
-      tcontroller.getinstance.pesquisaradm(edit1.text,combobox1.text, ClientDataSetAdm);
-      end
-      else
-      begin
-      tcontroller.getinstance.pesquisaradm(edit1.text,'', ClientDataSetAdm);
-      end;
+  if checkbox1.Checked = true then
+  begin
+    tcontroller.getinstance.pesquisaradm(edit1.text,combobox1.text, ClientDataSetAdm);
+  end
+  else
+  begin
+    tcontroller.getinstance.pesquisaradm(edit1.text,'', ClientDataSetAdm);
+  end;
 end;
 
 procedure TForm3.CancelarClick(Sender: TObject);
 begin
-close;
+  close;
 end;
 
 procedure TForm3.CheckBox1Click(Sender: TObject);
 begin
-if CheckBox1.Checked then
-      begin
-        ComboBox1.Enabled := true;
-      end;
-      if not CheckBox1.Checked then
-      begin
-        ComboBox1.Enabled := false;
-      end;
+  if CheckBox1.Checked then
+  begin
+    ComboBox1.Enabled := true;
+  end;
+  if not CheckBox1.Checked then
+  begin
+    ComboBox1.Enabled := false;
+  end;
 end;
 
 procedure TForm3.ExcluirClick(Sender: TObject);
 var
-    Cadmingroup : Tadmingroup;
-    begin
-    Cadmingroup := Tadmingroup.Create;
-    try
+  Cadmingroup : Tadmingroup;
+begin
+  Cadmingroup := Tadmingroup.Create;
+  try
     Cadmingroup.admingroupid := DBGrid1.Fields[1].AsString;
     Cadmingroup.comando := admCMDDetalhes;
     Cadmingroup := TController.GetInstance.Ctrladm(Cadmingroup, ClientDataSetAdm);   //l
     Cadmingroup.comando := admCMDExcluir;
     TController.GetInstance.Ctrladm(Cadmingroup, ClientDataSetAdm);
-    finally
-      Cadmingroup.Free;
-    end;
-    end;
+  finally
+    Cadmingroup.Free;
+  end;
+end;
 
 procedure TForm3.FormCreate(Sender: TObject);
 begin
@@ -128,18 +127,17 @@ end;
 
 procedure TForm3.IncluirClick(Sender: TObject);
 var
-      Form4 : TForm4;
-    begin
-      Form4.Alterar :=false;
-      Form4.ClientDataSet := ClientDataSetAdm;
-      Form4 := TForm4.Create(Form4);
-
-      Form4.Combo := ComboBox1;
-      try
-        Form4.ShowModal;
-      finally
-        Form4.Free;
-      end;
+  Form4 : TForm4;
+begin
+  Form4.Alterar :=false;
+  Form4.ClientDataSet := ClientDataSetAdm;
+  Form4 := TForm4.Create(Form4);
+  Form4.Combo := ComboBox1;
+  try
+    Form4.ShowModal;
+  finally
+    Form4.Free;
+  end;
 end;
 
 end.
